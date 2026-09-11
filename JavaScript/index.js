@@ -4,6 +4,12 @@ const revealItems = document.querySelectorAll('.reveal');
 const navLinks = [...document.querySelectorAll('.nav-actions a[href^="#"]')];
 const sections = [...document.querySelectorAll('main section[id]')];
 const contactForm = document.querySelector('.contact-form');
+const menuToggle = document.querySelector('.menu-toggle');
+const navigation = document.querySelector('.nav-actions');
+const scrollProgress = document.createElement('div');
+scrollProgress.className = 'scroll-progress';
+scrollProgress.setAttribute('aria-hidden', 'true');
+document.body.prepend(scrollProgress);
 
 if (year) {
 	year.textContent = new Date().getFullYear();
@@ -43,6 +49,24 @@ if (themeToggle) {
 			// Theme still works when storage is unavailable.
 		}
 		updateThemeControl(isDark);
+	});
+}
+
+if (menuToggle && navigation) {
+	menuToggle.addEventListener('click', () => {
+		const isOpen = navigation.classList.toggle('menu-open');
+		menuToggle.setAttribute('aria-expanded', String(isOpen));
+		menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+		menuToggle.querySelector('span').textContent = isOpen ? '×' : '☰';
+	});
+
+	navigation.querySelectorAll('a').forEach((link) => {
+		link.addEventListener('click', () => {
+			navigation.classList.remove('menu-open');
+			menuToggle.setAttribute('aria-expanded', 'false');
+			menuToggle.setAttribute('aria-label', 'Open navigation menu');
+			menuToggle.querySelector('span').textContent = '☰';
+		});
 	});
 }
 
@@ -95,3 +119,12 @@ if (contactForm) {
 		formStatus.textContent = 'Opening your email app...';
 	});
 }
+
+const updateScrollProgress = () => {
+	const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+	const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+	scrollProgress.style.width = `${progress}%`;
+};
+
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+updateScrollProgress();
