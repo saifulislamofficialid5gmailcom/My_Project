@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Calculator</title>
+    <link rel="stylesheet" href="../CSS/CalculatotGST.css">
+</head>
+<body>
+    <div class="container">
+        <h1>GST Calculator</h1>
+        <p>This is a simple GST calculator.</p>
+        <label for="amount">Enter Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount"><br><br>
+        <label for="gst">Enter GST Percentage:</label>
+        <input type="number" id="gst" placeholder="Enter GST percentage"><br><br>
+        <button onclick="calculateGST()">Calculate GST</button><br><br>
+        <button onclick="resetFields()">Reset</button>
+        <h2>Results:</h2>
+        <p class="result" id="result"></p>
+    </div>
+    <script src="../JavaScript/CalculatorGST.js"></script>
+</body>
+</html>

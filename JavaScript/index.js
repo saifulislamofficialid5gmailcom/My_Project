@@ -115,8 +115,19 @@ if (contactForm) {
 	formStatus.setAttribute('role', 'status');
 	contactForm.append(formStatus);
 
-	contactForm.addEventListener('submit', () => {
+	contactForm.addEventListener('submit', (event) => {
+		event.preventDefault();
+
+		const formData = new FormData(contactForm);
+		const name = String(formData.get('Name') || '').trim();
+		const email = String(formData.get('Email') || '').trim();
+		const subject = String(formData.get('Subject') || '').trim();
+		const message = String(formData.get('Message') || '').trim();
+		const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+		const mailtoUrl = `mailto:saifulislamofficialid5@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
 		formStatus.textContent = 'Opening your email app...';
+		window.location.href = mailtoUrl;
 	});
 }
 
